@@ -56,11 +56,17 @@ total_number_of_missing_values
 # 2.Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. 
 # For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 
+### Strategy: calulate the mean for the day in the 5-minute interval as follows and use that to find and replace
+### each NA as shown in part 3. bleow.
+
 mean_of_day_activity_with_NA_steps <- activity_data[, lapply(.SD, mean), by = date,  .SDcols=c("steps") ][, steps]
 
 
 # 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 # Replace NA with the mean of the day. Note: recycled warning message will be printed.
+
+### Note using below the code: activity_data[, lapply(.SD, mean), by = date,  .SDcols=c("steps") ][, steps] 
+### from part 2 above and that is code: mean_of_day_activity_with_NA_steps
 
 activity_with_NA_filled <-  activity_with_NA[is.na(steps), steps := as.integer(activity_data[, lapply(.SD, mean), by = date,  .SDcols=c("steps") ][, steps]) ]
 
@@ -83,8 +89,8 @@ mean_activity_with_NA_filled_total_steps
 median_activity_with_NA_filled_total_steps <- activity_with_NA_filled_total_steps[, lapply(.SD, median), .SDcols=c("steps")]
 median_activity_with_NA_filled_total_steps
 
-# ANSWER: yes these values of mean and median are different from the values obtained from the dataset with NA removed.
-# But the difference does not make a big impact on the analysis of the original data.set.
+### ANSWER: yes these values of mean and median are different from the values obtained from the dataset with NA removed.
+### But the difference does not make a big impact on the analysis of the original data.set.
 
 
 
@@ -117,6 +123,5 @@ xyplot(steps ~ interval | day.f, layout = c(1, 2), type = "l",
        ) ## Plot with 2 panels
 dev.off()
 
-
-# write.table(activity_with_NA_filled_day_total_steps, "activity_with_NA_filled_day_total_steps.csv", sep=",", row.names = FALSE)
-
+### Answer: Yes as we can see from the panel plot there are differences in 
+### activity patterns between weekdays and weekends.
